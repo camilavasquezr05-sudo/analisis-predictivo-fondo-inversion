@@ -17,6 +17,10 @@ El análisis aborda dos tareas: estimar el retorno del mes siguiente y clasifica
 
 ¿Permiten los indicadores macroeconómicos y el tipo de cambio, conocidos al cierre de un mes, predecir el retorno del ETF CFIETFCC en el mes siguiente mejor que una regla simple?
 
+### Hipótesis de investigación
+
+Los indicadores macroeconómicos de Chile y Estados Unidos y el tipo de cambio USD/CLP, disponibles al cierre de cada mes, permiten predecir el retorno del ETF CFIETFCC del mes siguiente con mayor precisión que una regla simple de referencia.
+
 ## 3. Objetivos
 
 - Evaluar la capacidad predictiva de variables macroeconómicas y cambiarias sobre el retorno mensual del ETF.
