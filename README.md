@@ -47,7 +47,6 @@ Estas hipótesis se evalúan mediante el desempeño fuera de muestra. La compara
 |---|---|---|
 | H1: predicción del retorno | Los predictores permiten estimar el retorno mensual mejor que el promedio histórico del tramo de entrenamiento. | Obtener un RMSE menor que la línea base. |
 | H2: dirección del retorno | Los modelos permiten distinguir alzas y caídas mejor que predecir siempre la clase mayoritaria. | Comparar accuracy, precision, recall y especificidad con la línea base. |
-| H3: aporte del dólar | Incorporar el nivel y la variación del USD/CLP mejora las predicciones frente a la versión sin dólar. | Comparar ambas versiones con la misma partición temporal y semilla. |
 
 ## 5. Datos utilizados
 
@@ -210,7 +209,6 @@ El árbol identifica una de las tres caídas, pero clasifica incorrectamente sei
 
 - **H1:** no se obtiene evidencia favorable en la versión completa; la línea base presenta menor RMSE.
 - **H2:** no se observa una mejora conjunta convincente frente a la clase mayoritaria. El árbol detecta algunas caídas, pero reduce considerablemente la exactitud.
-- **H3:** incorporar el dólar empeora el RMSE de los tres modelos en validación. En prueba los cambios son mixtos y ningún modelo supera a la línea base.
 
 La inflación chilena presenta una asociación negativa significativa al 5 % en la regresión lineal reportada. Su interpretación requiere considerar la muestra pequeña, la multicolinealidad y la evaluación de múltiples coeficientes.
 
