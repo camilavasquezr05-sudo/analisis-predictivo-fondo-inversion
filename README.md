@@ -1,9 +1,11 @@
-**Asignatura:** Ciencia de Datos — Trabajo Integrado Grupal (TIG)
-**Institución:** Universidad Andrés Bello
-**Semestre:** Primavera 2026
-**Profesor:** Felipe Cárcamo Jiménez
-**Integrantes:** Milan Yutronic, Camila Vasquez, Camila Gallardo y Paula Meyer
-**Herramientas:** R y RStudio
+# Predicción del retorno mensual del ETF CFIETFCC mediante indicadores macroeconómicos de Chile y Estados Unidos
+
+**Trabajo Integrado Grupal (TIG) — Ciencia de Datos**<br>
+**Institución:** Universidad Andrés Bello (UNAB) — Primavera 2026<br>
+**Docente:** Felipe Cárcamo Jiménez<br>
+**Integrantes:** Milan Yutronic · Camila Vasquez · Camila Gallardo · Paula Meyer<br>
+**Herramientas:** R y RStudio<br>
+**Repositorio oficial:** https://github.com/camilavasquezr05-sudo/analisis-predictivo-fondo-inversion
 
 ## 1. Descripción del proyecto
 
