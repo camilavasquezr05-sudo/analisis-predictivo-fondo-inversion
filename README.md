@@ -287,6 +287,11 @@ El archivo de resultados documentado en el informe es `resultados_TIG_CFIETFCC.x
 | UF | [Banco Central de Chile — UF e IVP](https://si3.bcentral.cl/Siete/ES/Siete/Cuadro/CAP_PRECIOS/MN_CAP_PRECIOS/UF_IVP_DIARIO) |
 | Desempleo de EE. UU. | [FRED — UNRATE](https://fred.stlouisfed.org/series/UNRATE) |
 | IMACEC de Chile | [Banco Central de Chile — IMACEC](https://si3.bcentral.cl/Siete/ES/Siete/Cuadro/CAP_CCNN/MN_CCNN76/CCNN2018_IMACEC_01_A?cbFechaInicio=2019&cbFechaTermino=2026&cbFrecuencia=MONTHLY&cbCalculo=NONE&cbFechaBase=) |
+| TPM de Chile | [Banco Central de Chile — Tasa de política monetaria](https://si3.bcentral.cl/Bdemovil/BDE/Series/MOV_SC_TI1) |
+| Tasa efectiva de fondos federales de EE. UU. | [FRED — Federal Funds Effective Rate (DFF)](https://fred.stlouisfed.org/series/DFF) |
+| IPC e inflación de EE. UU. | [U.S. Bureau of Labor Statistics — Consumer Price Index](https://www.bls.gov/cpi/) |
+| Desempleo de Chile | [Instituto Nacional de Estadísticas — Ocupación y desocupación](https://www.ine.gob.cl/estadisticas-por-tema/mercado-laboral/ocupacion-y-desocupacion) |
+| Dólar observado USD/CLP | [Banco Central de Chile — Tipos de cambio y paridades](https://www.bcentral.cl/es/web/banco-central/areas/estadisticas/tipos-de-cambios-y-paridades) |
 
 ## 14. Limitaciones
 
@@ -323,8 +328,6 @@ El equipo es responsable de verificar el código, las fuentes, las decisiones me
 Los datos y materiales de terceros conservan sus respectivas condiciones de uso. Su disponibilidad pública no implica autorización automática para redistribuirlos.
 
 La licencia del código propio está pendiente de definición por el equipo. Si se autoriza su reutilización, se incorporará un archivo `LICENSE` con sus condiciones y alcance. Esta licencia no se extenderá automáticamente a datos ni materiales de terceros.
-
-El repositorio no debe incluir credenciales, claves de acceso ni información personal ajena al proyecto.
 
 ## 18. Referencias metodológicas
 
