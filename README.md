@@ -321,11 +321,9 @@ Se utilizó Claude como apoyo para revisar la estructura de los datos, proponer 
 
 El equipo es responsable de verificar el código, las fuentes, las decisiones metodológicas y la concordancia entre los resultados y la documentación.
 
-## 17. Licencias y restricciones de publicación
+## 17. Licencias 
 
 Los datos y materiales de terceros conservan sus respectivas condiciones de uso. Su disponibilidad pública no implica autorización automática para redistribuirlos.
-
-La licencia del código propio está pendiente de definición por el equipo. Si se autoriza su reutilización, se incorporará un archivo `LICENSE` con sus condiciones y alcance. Esta licencia no se extenderá automáticamente a datos ni materiales de terceros.
 
 ## 18. Referencias metodológicas
 
