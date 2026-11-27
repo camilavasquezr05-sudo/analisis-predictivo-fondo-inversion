@@ -243,27 +243,25 @@ install.packages(c(
 
 ## 12. Instrucciones de ejecución
 
-1. Descargar el repositorio mediante **Code → Download ZIP**, o clonarlo con Git.
-2. Abrir el proyecto en RStudio.
-3. Establecer la carpeta raíz del repositorio como directorio de trabajo.
-4. Instalar las dependencias indicadas.
-5. Obtener los archivos de entrada siguiendo `datos/README.md`.
-6. Colocar los archivos en `datos/`, respetando sus nombres, hojas y estructura.
-7. Ejecutar el análisis.
 
-### Ejecución desde R
+## 12. Instrucciones de ejecución
+
+El repositorio incluye el código y todos los archivos Excel necesarios.
+
+1. Crear una carpeta en el computador (por ejemplo, `proyecto_CFIETFCC`).
+2. Descargar en esa carpeta el archivo `modelo_CFIETFCC.R` y todos los archivos `.xlsx` del repositorio. Para cada uno: abrir el archivo en GitHub y presionar el botón de descarga (**Download raw file**).
+3. Abrir `modelo_CFIETFCC.R` en RStudio.
+4. Ir a **Session → Set Working Directory → To Source File Location**.
+5. Instalar los paquetes de la sección 11 (solo la primera vez).
+6. Ejecutar el script con el botón **Source** o con:
 
 ```r
 source("modelo_CFIETFCC.R", encoding = "UTF-8")
 ```
 
-### Ejecución desde terminal
+Los resultados se guardan en `resultados_TIG_CFIETFCC.xlsx`.
 
-Desde la carpeta raíz del repositorio:
-
-```bash
-Rscript modelo_CFIETFCC.R
-```
+**Importante:** todos los archivos deben quedar en la misma carpeta y no se deben renombrar, porque el script los busca por su nombre exacto.
 
 ### Salidas esperadas
 
