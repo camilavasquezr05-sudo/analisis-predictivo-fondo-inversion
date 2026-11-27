@@ -9,57 +9,327 @@
 
 ## 1. Descripción del proyecto
 
-Este proyecto evalúa si los indicadores macroeconómicos de Chile y Estados Unidos y el tipo de cambio USD/CLP permiten predecir el retorno mensual del ETF de bonos corporativos chilenos CFIETFCC.
+Este proyecto evalúa si los indicadores macroeconómicos de Chile y Estados Unidos, junto con el tipo de cambio USD/CLP, permiten predecir el retorno mensual del ETF de bonos corporativos chilenos **CFIETFCC**.
 
-El análisis aborda dos tareas: estimar el retorno del mes siguiente y clasificar si este será positivo o no. Se comparan regresiones, árboles de decisión y bosques aleatorios con reglas simples de referencia.
+El análisis aborda dos tareas de aprendizaje supervisado:
+
+- **Regresión:** estimar el retorno porcentual del mes siguiente.
+- **Clasificación:** identificar si el retorno del mes siguiente será positivo o no positivo.
+
+Se comparan modelos estadísticos y de aprendizaje automático con reglas simples de referencia, para determinar si su complejidad se traduce en una mejora predictiva fuera de muestra.
 
 ## 2. Pregunta de investigación
 
-¿Permiten los indicadores macroeconómicos y el tipo de cambio, conocidos al cierre de un mes, predecir el retorno del ETF CFIETFCC en el mes siguiente mejor que una regla simple?
+**¿Permiten los indicadores macroeconómicos y el tipo de cambio, conocidos al cierre de un mes, predecir el retorno del ETF CFIETFCC en el mes siguiente mejor que una regla simple de referencia?**
 
-### Hipótesis de investigación
-
-Los indicadores macroeconómicos de Chile y Estados Unidos y el tipo de cambio USD/CLP, disponibles al cierre de cada mes, permiten predecir el retorno del ETF CFIETFCC del mes siguiente con mayor precisión que una regla simple de referencia.
+Se modela el retorno en lugar del precio porque representa la variación que interesa anticipar y reduce el riesgo de obtener relaciones engañosas entre series con tendencia.
 
 ## 3. Objetivos
 
-- Evaluar la capacidad predictiva de variables macroeconómicas y cambiarias sobre el retorno mensual del ETF.
-- Explorar la relación entre los indicadores y el rendimiento del fondo.
-- Comparar modelos de regresión y clasificación con reglas simples de referencia.
-- Determinar si incorporar el tipo de cambio mejora las predicciones.
-- Interpretar los resultados considerando el riesgo y el costo de oportunidad para un inversionista.
+### Objetivo general
 
-## 4. Datos utilizados
+Evaluar la capacidad predictiva de variables macroeconómicas y cambiarias sobre el retorno mensual del ETF CFIETFCC.
 
-El estudio utiliza 78 observaciones mensuales y ocho series económicas: tasas de política monetaria, inflación y desempleo de Chile y Estados Unidos, IMACEC de Chile y tipo de cambio USD/CLP.
+### Objetivos específicos
 
-Se incorporan también variables construidas, como el retorno del mes actual, los cambios mensuales de las tasas y la variación mensual del dólar, hasta completar 12 predictores.
+1. Construir una base mensual utilizando información disponible al cierre de cada mes.
+2. Describir la evolución de los retornos y su relación con los predictores mediante análisis exploratorio.
+3. Entrenar y comparar modelos de regresión y clasificación.
+4. Evaluar su desempeño frente a líneas base.
+5. Analizar si incorporar el tipo de cambio mejora las predicciones.
+6. Interpretar los resultados, sus implicancias y sus limitaciones.
 
-La inflación chilena se aproxima mediante la variación de la UF a 12 meses.
+## 4. Hipótesis de investigación
 
-## 5. Metodología
+Estas hipótesis se evalúan mediante el desempeño fuera de muestra. La comparación de métricas no constituye, por sí sola, una prueba formal de significancia estadística de las diferencias entre modelos.
 
-Se realiza preparación de datos, análisis exploratorio y entrenamiento de modelos supervisados.
+| Hipótesis | Planteamiento | Criterio de evaluación |
+|---|---|---|
+| H1: predicción del retorno | Los predictores permiten estimar el retorno mensual mejor que el promedio histórico del tramo de entrenamiento. | Obtener un RMSE menor que la línea base. |
+| H2: dirección del retorno | Los modelos permiten distinguir alzas y caídas mejor que predecir siempre la clase mayoritaria. | Comparar accuracy, precision, recall y especificidad con la línea base. |
+| H3: aporte del dólar | Incorporar el nivel y la variación del USD/CLP mejora las predicciones frente a la versión sin dólar. | Comparar ambas versiones con la misma partición temporal y semilla. |
 
-La muestra se divide cronológicamente en:
-- Entrenamiento: 46 meses.
-- Validación: 16 meses.
-- Prueba: 16 meses.
+## 5. Datos utilizados
 
-Se utiliza únicamente información disponible al momento de realizar cada predicción, para evitar incorporar datos futuros.
+La unidad de observación es el **mes**. La muestra efectiva contiene **78 observaciones**:
 
-**Regresión:** regresión lineal, árbol de regresión y bosque aleatorio.
+- **Meses de los predictores:** abril de 2020 a septiembre de 2026.
+- **Meses de los retornos objetivo:** mayo de 2020 a octubre de 2026.
 
-**Clasificación:** regresión logística, árbol de clasificación y bosque aleatorio.
+### Archivos de entrada
 
-Los modelos se comparan con reglas de referencia basadas en el promedio y la clase mayoritaria del conjunto de entrenamiento.
+| Archivo | Contenido | Uso en el proyecto |
+|---|---|---|
+| `CFIETFCC.xlsx` | Precio de cierre ajustado del ETF | Cálculo de retornos |
+| `TPM_Chile.xlsx` | Tasa de política monetaria de Chile | Predictor |
+| `TPM_EEUU.xlsx` | Tasa de fondos federales de EE. UU. | Predictor |
+| `Inflación_Chile.xlsx` | Variación de la UF a 12 meses | Aproximación de inflación chilena |
+| `Inflación_EEUU.xlsx` | Inflación de EE. UU. disponible a cada fecha | Predictor |
+| `Desempleo_Chile.xlsx` | Desocupación de Chile disponible a cada fecha | Predictor |
+| `Desempleo_EEUU.xlsx` | Desempleo de EE. UU. disponible a cada fecha | Predictor |
+| `IMACEC_Chile.xlsx` | Variación del IMACEC a 12 meses disponible a cada fecha | Predictor |
+| `valor del dolar Chile.xlsx` | Tipo de cambio USD/CLP | Nivel y variación mensual |
+| `IMACEC_EEUU.xlsx` | Serie identificada como CPI de referencia de EE. UU. | Excluida del modelamiento |
 
-## 6. Principales resultados
+### Consideraciones sobre los datos
 
-Ningún modelo superó a la regla simple de referencia en validación ni en prueba.
+- El archivo `IMACEC_EEUU.xlsx` contiene información de precios y no un indicador de actividad estadounidense. Se excluye por duplicar información de inflación.
+- La variación de la UF se utiliza como aproximación de la inflación chilena; no equivale al IPC contemporáneo.
+- Se utilizan las columnas que representan información disponible a cada fecha.
+- Noviembre de 2026 se excluye porque los datos del ETF no cubren el mes completo.
 
-En regresión, predecir el retorno promedio obtuvo un RMSE de 0,533 puntos porcentuales en prueba, frente a 0,544 del bosque aleatorio.
+## 6. Variables del modelo
 
-Agregar el dólar no mejoró la capacidad predictiva. La inflación chilena presentó una asociación estadística negativa en la regresión lineal, pero esto no se tradujo en una ventaja predictiva fuera de muestra.
+### Variables objetivo
 
-Los resultados corresponden a la muestra y metodología utilizadas y no establecen relaciones causales.
+| Variable | Definición | Problema |
+|---|---|---|
+| `ret_sig` | Retorno porcentual del ETF en el mes siguiente | Regresión |
+| `sube_sig` | “Sube” si el retorno siguiente es mayor que cero; “Baja” en caso contrario | Clasificación |
+
+La etiqueta **“Baja” incluye retornos iguales a cero**.
+
+### Variables construidas
+
+| Variable | Definición |
+|---|---|
+| `ret_mes` | Retorno porcentual del ETF en el mes actual |
+| `d_tpm_cl` | Cambio mensual de la TPM de Chile |
+| `d_tpm_us` | Cambio mensual de la tasa de EE. UU. |
+| `ret_dolar` | Variación porcentual mensual del USD/CLP |
+
+La versión utiliza **12 predictores**: siete indicadores macroeconómicos, el nivel y la variación del dólar, los cambios mensuales de ambas tasas de política y el retorno actual del ETF.
+
+## 7. Metodología
+
+### Preparación de datos
+
+1. Lectura de los archivos Excel.
+2. Estandarización de fechas y valores numéricos.
+3. Selección del último dato disponible de cada mes.
+4. Unión de las series por mes.
+5. Construcción de retornos, cambios de tasas y variables objetivo.
+6. Revisión y eliminación de observaciones incompletas.
+7. Análisis exploratorio de distribuciones, evolución temporal y correlaciones.
+
+### División temporal
+
+La separación de los datos respeta el orden cronológico.
+
+| Conjunto | Meses de los predictores | Observaciones | Propósito |
+|---|---|---:|---|
+| Entrenamiento | Abril de 2020 a enero de 2024 | 46 | Ajustar los modelos |
+| Validación | Febrero de 2024 a mayo de 2025 | 16 | Comparar y seleccionar modelos |
+| Prueba | Junio de 2025 a septiembre de 2026 | 16 | Evaluar el desempeño final |
+
+Después de comparar los modelos en validación, se reentrenan con las 62 observaciones de entrenamiento y validación y se evalúan en el conjunto de prueba.
+
+### Prevención de fuga de información
+
+- Los predictores corresponden al mes `t` y la variable objetivo al mes `t+1`.
+- Se utilizan datos macroeconómicos disponibles al cierre del mes correspondiente.
+- La partición es cronológica y no aleatoria.
+- Las líneas base se calculan utilizando únicamente el tramo disponible para entrenar.
+- El conjunto de prueba se reserva para la evaluación final.
+
+## 8. Modelos implementados
+
+| Problema | Modelo | Motor en R |
+|---|---|---|
+| Regresión | Regresión lineal | `lm` |
+| Regresión | Árbol de regresión | `rpart` |
+| Regresión | Bosque aleatorio | `ranger` |
+| Clasificación | Regresión logística | `glm` |
+| Clasificación | Árbol de clasificación | `rpart` |
+| Clasificación | Bosque aleatorio | `ranger` |
+
+### Líneas base
+
+- **Regresión:** predecir el retorno promedio del tramo utilizado para entrenar.
+- **Clasificación:** predecir siempre la clase mayoritaria del tramo utilizado para entrenar.
+
+### Configuración documentada
+
+| Parámetro | Configuración |
+|---|---|
+| Semilla aleatoria | `123` |
+| Profundidad máxima del árbol | `3` |
+| Parámetro `min_n` | `5` |
+| Número de árboles del bosque | `500` |
+| Importancia de variables | Por permutación |
+| Búsqueda en grilla | No realizada |
+
+## 9. Métricas de evaluación
+
+### Regresión
+
+- **MAE:** error absoluto medio.
+- **RMSE:** raíz del error cuadrático medio.
+
+Ambas métricas se expresan en **puntos porcentuales de retorno mensual**. El criterio principal de selección es el menor RMSE en validación.
+
+### Clasificación
+
+- **Accuracy:** proporción total de predicciones correctas.
+- **Precision:** proporción de alzas reales entre las observaciones predichas como “Sube”.
+- **Recall:** proporción de alzas correctamente identificadas.
+- **Especificidad:** proporción de caídas correctamente identificadas.
+- **Matriz de confusión:** distribución de aciertos y errores por clase.
+
+La clase positiva es **“Sube”**. Con el orden de niveles `c("Baja", "Sube")`, las métricas utilizan `event_level = "second"`.
+
+## 10. Principales resultados
+
+Los siguientes resultados corresponden a la evaluación de los modelos en el conjunto de prueba.
+
+### Regresión: conjunto de prueba
+
+| Modelo | MAE | RMSE |
+|---|---:|---:|
+| Línea base: promedio | **0,381** | **0,533** |
+| Bosque aleatorio | 0,422 | 0,544 |
+| Regresión lineal | 0,509 | 0,653 |
+| Árbol de regresión | 0,557 | 0,665 |
+
+Ningún modelo de la versión completa supera el RMSE de la línea base en el conjunto de prueba.
+
+### Clasificación: conjunto de prueba
+
+| Modelo | Accuracy | Precision | Recall | Especificidad |
+|---|---:|---:|---:|---:|
+| Línea base: siempre “Sube” | 0,813 | 0,813 | 1,00 | 0,00 |
+| Regresión logística | 0,813 | 0,813 | 1,00 | 0,00 |
+| Bosque aleatorio | 0,813 | 0,813 | 1,00 | 0,00 |
+| Árbol de clasificación | 0,500 | 0,778 | 0,54 | 0,33 |
+
+La regresión logística y el bosque predicen “Sube” en los 16 meses de prueba, reproduciendo la línea base.
+
+El árbol identifica una de las tres caídas, pero clasifica incorrectamente seis meses de alza como caídas.
+
+### Evaluación de las hipótesis
+
+- **H1:** no se obtiene evidencia favorable en la versión completa; la línea base presenta menor RMSE.
+- **H2:** no se observa una mejora conjunta convincente frente a la clase mayoritaria. El árbol detecta algunas caídas, pero reduce considerablemente la exactitud.
+- **H3:** incorporar el dólar empeora el RMSE de los tres modelos en validación. En prueba los cambios son mixtos y ningún modelo supera a la línea base.
+
+La inflación chilena presenta una asociación negativa significativa al 5 % en la regresión lineal reportada. Su interpretación requiere considerar la muestra pequeña, la multicolinealidad y la evaluación de múltiples coeficientes.
+
+## 11. Dependencias
+
+### Software
+
+- **R 4.1 o superior.**
+- **RStudio**, opcional como entorno de desarrollo.
+
+### Paquetes de R
+
+- `tidyverse`
+- `tidymodels`
+- `ranger`
+- `rpart`
+- `readxl`
+- `writexl`
+
+Instalar los paquetes desde la consola de R:
+
+```r
+install.packages(c(
+  "tidyverse",
+  "tidymodels",
+  "ranger",
+  "rpart",
+  "readxl",
+  "writexl"
+))
+```
+
+## 12. Instrucciones de ejecución
+
+1. Descargar el repositorio mediante **Code → Download ZIP**, o clonarlo con Git.
+2. Abrir el proyecto en RStudio.
+3. Establecer la carpeta raíz del repositorio como directorio de trabajo.
+4. Instalar las dependencias indicadas.
+5. Obtener los archivos de entrada siguiendo `datos/README.md`.
+6. Colocar los archivos en `datos/`, respetando sus nombres, hojas y estructura.
+7. Ejecutar el análisis.
+
+### Ejecución desde R
+
+```r
+source("modelo_CFIETFCC.R", encoding = "UTF-8")
+```
+
+### Ejecución desde terminal
+
+Desde la carpeta raíz del repositorio:
+
+```bash
+Rscript modelo_CFIETFCC.R
+```
+
+### Salidas esperadas
+
+- Base mensual procesada.
+- Análisis exploratorio y gráficos.
+- Métricas de regresión y clasificación.
+- Matrices de confusión.
+- Coeficientes de regresión.
+- Importancia de variables.
+- Predicciones del conjunto de prueba.
+
+El archivo de resultados documentado en el informe es `resultados_TIG_CFIETFCC.xlsx`.
+
+## 13. Fuentes de datos
+
+| Datos | Fuente |
+|---|---|
+| Precio histórico del ETF | [Yahoo Finance — CFIETFCC.SN](https://finance.yahoo.com/quote/CFIETFCC.SN/history/) |
+| UF | [Banco Central de Chile — UF e IVP](https://si3.bcentral.cl/Siete/ES/Siete/Cuadro/CAP_PRECIOS/MN_CAP_PRECIOS/UF_IVP_DIARIO) |
+| Desempleo de EE. UU. | [FRED — UNRATE](https://fred.stlouisfed.org/series/UNRATE) |
+| IMACEC de Chile | [Banco Central de Chile — IMACEC](https://si3.bcentral.cl/Siete/ES/Siete/Cuadro/CAP_CCNN/MN_CCNN76/CCNN2018_IMACEC_01_A?cbFechaInicio=2019&cbFechaTermino=2026&cbFrecuencia=MONTHLY&cbCalculo=NONE&cbFechaBase=) |
+
+## 14. Limitaciones
+
+- Muestra de 78 observaciones y solo 16 meses de prueba.
+- Predominio de meses con retorno positivo.
+- Pocas caídas en el conjunto de prueba.
+- Correlación elevada entre varios predictores.
+- Ausencia de tasas de bonos y spreads corporativos.
+- Cambios económicos importantes durante el período.
+- Uso de un único corte temporal de validación y prueba.
+- Posible influencia de la tendencia del dólar en nivel.
+- Clasificación de retornos apenas negativos como caídas, aunque su magnitud económica sea mínima.
+
+Los resultados describen el desempeño en esta muestra. No demuestran que la información macroeconómica carezca de utilidad en otros períodos, activos o modelos.
+
+## 15. Conclusiones
+
+En la muestra analizada, los modelos de la versión completa no mejoran la predicción del retorno frente a la regla de utilizar el promedio histórico del tramo de entrenamiento.
+
+En clasificación, la regresión logística y el bosque reproducen la clase mayoritaria. El árbol identifica algunas caídas, pero genera errores que limitan su utilidad.
+
+Agregar el dólar no produce una mejora consistente. La asociación observada entre inflación chilena y retorno tampoco se traduce en una ventaja predictiva fuera de muestra.
+
+El proyecto destaca la importancia de comparar los modelos con líneas base, respetar el orden temporal e interpretar las métricas considerando el contexto económico.
+
+## 16. Uso de inteligencia artificial
+
+Se utilizó Claude como apoyo para revisar la estructura de los datos, proponer la organización del código, identificar riesgos de fuga de información y revisar la interpretación de métricas.
+
+El equipo es responsable de verificar el código, las fuentes, las decisiones metodológicas y la concordancia entre los resultados y la documentación.
+
+## 17. Licencias y restricciones de publicación
+
+Los datos y materiales de terceros conservan sus respectivas condiciones de uso. Su disponibilidad pública no implica autorización automática para redistribuirlos.
+
+La licencia del código propio está pendiente de definición por el equipo. Si se autoriza su reutilización, se incorporará un archivo `LICENSE` con sus condiciones y alcance. Esta licencia no se extenderá automáticamente a datos ni materiales de terceros.
+
+El repositorio no debe incluir credenciales, claves de acceso ni información personal ajena al proyecto.
+
+## 18. Referencias metodológicas
+
+- Kuhn, M., & Silge, J. (2022). *Tidy Modeling with R*. O’Reilly Media. [https://www.tmwr.org/](https://www.tmwr.org/)
+
+- Wickham, H., Çetinkaya-Rundel, M., & Grolemund, G. (2023). *R for Data Science* (2.ª ed.). O’Reilly Media. [https://r4ds.hadley.nz/](https://r4ds.hadley.nz/)
+
+- Hyndman, R. J., & Athanasopoulos, G. (2021). *Forecasting: Principles and Practice* (3.ª ed.). OTexts. [https://otexts.com/fpp3/](https://otexts.com/fpp3/)
