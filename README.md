@@ -243,9 +243,6 @@ install.packages(c(
 
 ## 12. Instrucciones de ejecución
 
-
-## 12. Instrucciones de ejecución
-
 El repositorio incluye el código y todos los archivos Excel necesarios.
 
 1. Crear una carpeta en el computador (por ejemplo, `proyecto_CFIETFCC`).
